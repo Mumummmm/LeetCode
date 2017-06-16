@@ -1,14 +1,15 @@
 # LeetCode
 # List
-#605 Can Place Flowers
+#605. Can Place Flowers
+#581. Shortest Unsorted Continous Subarray
 # Detail
-### #605 Can Place Flowers
+### #605. Can Place Flowers
 
 **Problem description:**
 >Suppose you have a long flowerbed in which some of the plots are planted and some are not. However, flowers cannot be planted in adjacent plots - they would compete for water and both would die.
 Given a flowerbed (represented as an array containing 0 and 1, where 0 means empty and 1 means not empty), and a number n, return if n new flowers can be planted in it without violating the no-adjacent-flowers rule.
 
-**-my solution**
+**solution:**
 ```
 public class Solution {
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
@@ -40,6 +41,30 @@ public class Solution {
             output = true;
         }
         return output;
+    }
+}
+```
+
+### #581. Shortest Unsorted Continous Subarray
+
+**Problem description:**
+>Given an integer array, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too. 
+You need to find the shortest such subarray and output its length.
+
+**solution:**
+```
+public class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        int l = nums.length, r = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] < nums[i]) {
+                    r = Math.max(r, j);
+                    l = Math.min(l, i);
+                }
+            }
+        }
+        return r - l < 0 ? 0 : r - l + 1;
     }
 }
 ```
