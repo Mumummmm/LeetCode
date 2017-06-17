@@ -1,7 +1,8 @@
 # LeetCode
 # List
-#605. Can Place Flowers
-#581. Shortest Unsorted Continous Subarray
+#605. Can Place Flowers 
+#581. Shortest Unsorted Continous Subarray 
+#566. Reshape the Matrix 
 # Detail
 ### #605. Can Place Flowers
 
@@ -65,6 +66,60 @@ public class Solution {
             }
         }
         return r - l < 0 ? 0 : r - l + 1;
+    }
+}
+```
+**better solution:**
+```
+public class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        int n = nums.length, beg = -1, end = -2, min = nums[n-1], max = nums[0];
+        for(int i=1;i<n;i++){
+            max = Math.max(max,nums[i]);
+            min = Math.min(min,nums[n-i-1]);
+            if(nums[i]<max){
+                end = i;
+            }
+            if(nums[n-i-1]>min){
+                beg = n-i-1;
+            }
+        }
+        return end-beg+1;
+    }
+}
+```
+
+### #566. Reshape the Matrix 
+
+**Problem description:**
+>In MATLAB, there is a very useful function called 'reshape', which can reshape a matrix into a new one with different size but keep its original data. 
+You're given a matrix represented by a two-dimensional array, and two positive integers r and c representing the row number and column number of the wanted reshaped matrix, respectively.
+The reshaped matrix need to be filled with all the elements of the original matrix in the same row-traversing order as they were. 
+If the 'reshape' operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix. 
+
+**solution:**
+```
+public class Solution {
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        int m = nums.length, n = nums[0].length, tempr = 0, tempc = 0;
+        if(m*n!=r*c){
+            return nums;
+        }
+        int reshape[][] = new int[r][c];
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(tempc<n){
+                    reshape[i][j] = nums[tempr][tempc];
+                    tempc++;
+                }else{
+                    tempr++;
+                    tempc = 0;
+                    reshape[i][j] = nums[tempr][tempc];
+                    tempc++;
+                }
+            }
+        }
+        return reshape;
     }
 }
 ```
